@@ -16,11 +16,12 @@ class NotificationHandler {
   static Future _notificationDetails() async {
     return NotificationDetails(
       AndroidNotificationDetails(
-        'notif_id',
-        'notifications_app',
-        'notif for notifications app',
+        'basic_channel_id',
+        'basic_channel',
+        'Basic channel notification',
         importance: Importance.Max,
         priority: Priority.Max,
+        visibility: NotificationVisibility.Public,
       ),
       IOSNotificationDetails(),
     );
