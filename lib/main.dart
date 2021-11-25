@@ -51,9 +51,6 @@ class _HomePageState extends State<HomePage> {
     getDeviceToken();
     _fcm.configure(onMessage: (Map<String, dynamic> message) {
       final notification = message['notification'];
-      // title = notification['title'];
-      // body = notification['body'];
-      // payload = 'birthday.payload';
       NotificationHandler.showNotifications(
         title: notification['title'] != null ? notification['title'] : null,
         body: notification['body'] != null ? notification['body'] : null,
@@ -71,10 +68,6 @@ class _HomePageState extends State<HomePage> {
         body: notification['body'] != null ? notification['body'] : null,
         payload: 'this the first notification',
       );
-      setState(() {
-        messages.add(
-            Messages(title: notification['title'], body: notification['body']));
-      });
       print('onLaunch: $message');
     }, onResume: (Map<String, dynamic> message) {
       final notification = message['notification'];
@@ -83,10 +76,6 @@ class _HomePageState extends State<HomePage> {
         body: notification['body'] != null ? notification['body'] : null,
         payload: 'this the first notification',
       );
-      setState(() {
-        messages.add(
-            Messages(title: notification['title'], body: notification['body']));
-      });
       print('onResume: $message');
     });
   }
@@ -105,9 +94,20 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(messages[index].body),
-                    subtitle: Text(messages[index].title),
+                  return Card(
+                    margin: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      title: Column(
+                        children: [
+                          Text(
+                            messages[index].title,
+                            textAlign: TextAlign.start,
+                          ),
+                          Divider(),
+                        ],
+                      ),
+                      subtitle: Text(messages[index].body),
+                    ),
                   );
                 },
               ),
